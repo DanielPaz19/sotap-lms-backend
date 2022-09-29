@@ -11,11 +11,18 @@ class StudentController extends Controller
         return Student::all();
     }
 
-    public function new_student(Request $request){
+    public function new(Request $request){
         return Student::create([
             'firstname' => $request->input('firstname'),
             'middlename' => $request->input('middlename'),
             'lastname' => $request->input('lastname'),
         ]);
+    }
+
+    public function delete($id) {
+        $student = Student::find($id);
+        $result =  $student->delete();
+
+        return $result;
     }
 }
