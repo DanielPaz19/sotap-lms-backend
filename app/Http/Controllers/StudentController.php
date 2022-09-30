@@ -3,12 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Student;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Resources\StudentCollection;
 
 class StudentController extends Controller
 {
     public function students(Request $request) {
-        return Student::all();
+        // return Student::all();
+
+        return new StudentCollection(Student::all());
     }
 
     public function store(Request $request){
@@ -25,4 +29,5 @@ class StudentController extends Controller
 
         return $result;
     }
+
 }

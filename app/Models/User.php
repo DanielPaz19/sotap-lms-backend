@@ -37,4 +37,8 @@ class User extends Authenticatable
      *
      * @var array<string, string>
      */
+
+     public function student(){
+        return $this->hasOne(Student::class);
+     }
 }

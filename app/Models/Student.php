@@ -14,4 +14,9 @@ class Student extends Model
         'middlename',
         'lastname',
     ];
+    
+    public function user(){
+        return $this->belongsTo(User::class);
+     }
+
 }
