@@ -26,8 +26,9 @@ Route::middleware('auth:sanctum')->group(function(){
     // Check Users
     Route::get('/user', [AuthController::class, 'user']);
     Route::post('/logout', [AuthController::class, 'logout']);
+
+    // student
     Route::get('/students',[StudentController::class, 'students']);
-    Route::post('/students',[StudentController::class, 'new']);
+    Route::post('/students',[StudentController::class, 'store']);
     Route::delete('/students/{id}',[StudentController::class, 'delete']);
-    
 });

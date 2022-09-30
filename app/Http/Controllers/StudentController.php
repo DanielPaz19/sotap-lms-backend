@@ -11,7 +11,7 @@ class StudentController extends Controller
         return Student::all();
     }
 
-    public function new(Request $request){
+    public function store(Request $request){
         return Student::create([
             'firstname' => $request->input('firstname'),
             'middlename' => $request->input('middlename'),
