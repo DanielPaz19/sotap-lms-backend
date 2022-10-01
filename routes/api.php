@@ -34,7 +34,6 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::delete('/students/{id}',[StudentController::class, 'delete']);
 
     //teacher
-
     Route::get('/teachers',[TeacherController::class, 'teachers']);
     Route::post('/teachers',[TeacherController::class, 'store']);
     Route::delete('/teachers/{id}',[TeacherController::class, 'delete']);

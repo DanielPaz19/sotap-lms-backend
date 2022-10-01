@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Teacher;
-
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
 class TeacherController extends Controller
@@ -22,9 +22,14 @@ class TeacherController extends Controller
 
     public function delete($id) {
         $teacher = Teacher::find($id);
-        $result =  $teacher->delete();
 
-        return $result;
+        if($teacher == "") {
+            return ["message" => "ID not found"];
+        }else {
+            $teacher->delete();
+        }
+
+        return $teacher;
     }
 
 
