@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\TeacherController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,4 +32,10 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/students',[StudentController::class, 'students']);
     Route::post('/students',[StudentController::class, 'store']);
     Route::delete('/students/{id}',[StudentController::class, 'delete']);
+
+    //teacher
+
+    Route::get('/teachers',[TeacherController::class, 'teachers']);
+    Route::post('/teachers',[TeacherController::class, 'store']);
+    Route::delete('/teachers/{id}',[TeacherController::class, 'delete']);
 });

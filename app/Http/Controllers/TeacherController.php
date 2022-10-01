@@ -2,20 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Student;
-use App\Models\User;
-use Illuminate\Http\Request;
-use App\Http\Resources\StudentCollection;
+use App\Models\Teacher;
 
-class StudentController extends Controller
+use Illuminate\Http\Request;
+
+class TeacherController extends Controller
 {
-    public function students() {
-        // return Student::all();
-        return new StudentCollection(Student::all());
+    public function teachers() {
+        return Teacher::all();
     }
 
     public function store(Request $request){
-        return Student::create([
+        return Teacher::create([
             'firstname' => $request->input('firstname'),
             'middlename' => $request->input('middlename'),
             'lastname' => $request->input('lastname'),
@@ -23,10 +21,11 @@ class StudentController extends Controller
     }
 
     public function delete($id) {
-        $student = Student::find($id);
-        $result =  $student->delete();
+        $teacher = Teacher::find($id);
+        $result =  $teacher->delete();
 
         return $result;
     }
+
 
 }
