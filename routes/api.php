@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\SubjectController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,8 +34,13 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('/students',[StudentController::class, 'store']);
     Route::delete('/students/{id}',[StudentController::class, 'delete']);
 
-    //teacher
+    // teacher
     Route::get('/teachers',[TeacherController::class, 'teachers']);
     Route::post('/teachers',[TeacherController::class, 'store']);
     Route::delete('/teachers/{id}',[TeacherController::class, 'delete']);
+
+    // subjects
+    Route::get('/subjects',[SubjectController::class, 'subjects']);
+    Route::post('/subjects',[SubjectController::class, 'store']);
+    Route::delete('/subjects/{id}',[SubjectController::class, 'delete']);
 });
