@@ -19,8 +19,6 @@ use App\Http\Controllers\SubjectController;
 */
 
 
-
-
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 

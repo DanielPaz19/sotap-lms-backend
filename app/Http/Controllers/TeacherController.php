@@ -5,11 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Teacher;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Http\Resources\TeacherCollection;
+
 
 class TeacherController extends Controller
 {
     public function teachers() {
-        return Teacher::all();
+        // return Teacher::all();
+        return new TeacherCollection(Teacher::all());
+        
     }
 
     public function store(Request $request){
