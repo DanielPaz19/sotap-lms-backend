@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\GradeLevel;
+use App\Http\Resources\GradeLevelCollection;
+
 
 class GradeLevelController extends Controller
 {
     public function grade_levels() {
         // return Student::all();
-        return GradeLevel::all();
+        return new GradeLevelCollection(GradeLevel::all());
     }
 
     public function store(Request $request){

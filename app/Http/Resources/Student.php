@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources;
 
+
+use App\Http\Resources\GradeLevel as GradeLevelResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class Student extends JsonResource
@@ -24,7 +26,6 @@ class Student extends JsonResource
             'created_at' => $this->created_at->diffForHumans(),
             'updated_at' => $this->updated_at->diffForHumans(),
             'user' => $this->user,
-            'grade' => $this->grade_level,
         ];
     }
 }
