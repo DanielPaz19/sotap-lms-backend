@@ -20,4 +20,8 @@ class Student extends Model
         return $this->belongsTo(User::class);
      }
 
+     public function grade_level() {
+        return $this->belongsToMany(GradeLevel::class);
+     }
+
 }
