@@ -21,6 +21,7 @@ class Subject extends JsonResource
             'subject_code' => $this->subject_code,
             'subject_name' => $this->subject_name,
             'subject_description' => $this->subject_description,
+            'teachers'=> $this->teachers,
         ];
     }
 }
