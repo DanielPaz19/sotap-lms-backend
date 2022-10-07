@@ -17,10 +17,12 @@ class CreateGradeSubjectsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('subject_id');
             $table->unsignedBigInteger('grade_id');
+            $table->unsignedBigInteger('teacher_id');
             $table->timestamps();
 
             $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
             $table->foreign('grade_id')->references('id')->on('grade_levels')->onDelete('cascade');
+            $table->foreign('teacher_id')->references('id')->on('teachers')->onDelete('cascade');
         });
     }
 
@@ -31,7 +33,8 @@ class CreateGradeSubjectsTable extends Migration
      */
     public function down()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0');   
         Schema::dropIfExists('grade_subject');
-
+        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }
 }
