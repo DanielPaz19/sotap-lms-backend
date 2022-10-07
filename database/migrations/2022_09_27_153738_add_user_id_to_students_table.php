@@ -22,7 +22,7 @@ class AddUserIdToStudentsTable extends Migration
         });
 
         Schema::table('students', function (Blueprint $table) {
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -33,8 +33,13 @@ class AddUserIdToStudentsTable extends Migration
      */
     public function down()
     {
-        Schema::table('students', function (Blueprint $table) {
-            $table->dropColumn('user_id');
-        });
+        if (Schema::hasColumn('students', 'user_id'))
+        {
+            Schema::table('students', function (Blueprint $table)
+            {
+                $table->dropForeign(['user_id']);
+                $table->dropColumn('user_id');
+            });
+        }
     }
 }

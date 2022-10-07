@@ -32,5 +32,6 @@ class CreateGradeSubjectsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('grade_subject');
+
     }
 }

@@ -18,8 +18,8 @@ class CreateGradeStudentsTable extends Migration
             $table->unsignedBigInteger('student_id');
             $table->unsignedBigInteger('grade_id');
             $table->timestamps();
-            $table->foreign('student_id')->references('id')->on('students');
-            $table->foreign('grade_id')->references('id')->on('grade_levels');
+            $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
+            $table->foreign('grade_id')->references('id')->on('grade_levels')->onDelete('cascade');
         });
 
      

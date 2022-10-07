@@ -20,14 +20,5 @@ class Teacher extends Model
         return $this->belongsTo(User::class);
      }
 
-     /**
-      * The subjects that belong to the Teacher
-      *
-      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-      */
-     public function subjects()
-     {
-         return $this->belongsToMany(Subject::class, 'subject_teacher');
-     }
 
 }
