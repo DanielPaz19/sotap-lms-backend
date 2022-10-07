@@ -18,16 +18,4 @@ class Subject extends Model
     public function grade_level() {
         return $this->belongsToMany(GradeLevel::class, 'grade_subject', 'subject_id', 'grade_id');
      }
-
- /**
-  * The roles that belong to the Subject
-  *
-  * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-  */
-    public function teachers()
-    {
-        return $this->belongsToMany(Teacher::class, 'subject_teacher');
-    }
-
-
 }
