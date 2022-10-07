@@ -21,6 +21,7 @@ class GradeLevel extends JsonResource
             'name' => $this->name,
             'subjects' => $this->subjects,
             'teachers' => $this->teachers,
+            'students' => $this->students,
         ];
     }
 }
