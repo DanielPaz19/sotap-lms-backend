@@ -15,7 +15,10 @@ class Subject extends Model
         'subject_description',
     ];
 
-    public function grade_level() {
-        return $this->belongsToMany(GradeLevel::class, 'grade_subject', 'subject_id', 'grade_id');
-     }
+   
+   public function teachers()
+   {
+       return $this->belongsToMany(Teacher::class, 'subject_teacher');
+   }
+
 }
