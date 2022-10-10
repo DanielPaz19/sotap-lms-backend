@@ -13,18 +13,7 @@ class EditGradeSubjectsTable extends Migration
      */
     public function up()
     {
-        //
-        // Schema::create('grade_subject', function (Blueprint $table) {
-        //     $table->id();
-        //     $table->unsignedBigInteger('subject_id');
-        //     $table->unsignedBigInteger('grade_id');
-        //     $table->unsignedBigInteger('teacher_id');
-        //     $table->timestamps();
 
-        //     $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
-        //     $table->foreign('grade_id')->references('id')->on('grade_levels')->onDelete('cascade');
-        //     $table->foreign('teacher_id')->references('id')->on('teachers')->onDelete('cascade');
-        // });
 
         Schema::table('grade_subject', function (Blueprint $table) {
             $table->dropForeign(['subject_id']);

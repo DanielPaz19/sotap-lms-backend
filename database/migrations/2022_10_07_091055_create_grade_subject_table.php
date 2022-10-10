@@ -15,13 +15,11 @@ class CreateGradeSubjectTable extends Migration
     {
         Schema::create('grade_subject', function (Blueprint $table) {
             $table->unsignedBigInteger('grade_id');
-            $table->unsignedBigInteger('subject_id');
-            $table->unsignedBigInteger('teacher_id');
-            $table->unique(['grade_id', 'subject_id']);
+            $table->unsignedBigInteger('subject_teacher_id');
+            $table->unique(['grade_id', 'subject_teacher_id']);
 
+            $table->foreign('subject_teacher_id')->references('id')->on('subject_teacher')->onDelete('cascade');
             $table->foreign('grade_id')->references('id')->on('grade_levels')->onDelete('cascade');
-            $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
-            $table->foreign('teacher_id')->references('id')->on('teachers')->onDelete('cascade');
         });
     }
 
