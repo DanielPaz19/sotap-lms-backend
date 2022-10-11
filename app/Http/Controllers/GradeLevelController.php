@@ -33,10 +33,16 @@ class GradeLevelController extends Controller
 
         return $grade_level->students()->attach($req->input('student_id'));
     }
-    
+
     public function remove_students(Request $req) {
         $grade_level = GradeLevel::find($req->input('grade_id'));
 
         return $grade_level->students()->detach($req->input('student_id'));
+    }
+
+    public function add_subject(Request $req) {
+        $grade_level = GradeLevel::find($req->input('grade_id'));
+        
+        return $grade_level->subject_teachers()->attach($req->input('subject_teacher_id'));
     }
 }
