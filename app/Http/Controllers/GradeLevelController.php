@@ -27,4 +27,10 @@ class GradeLevelController extends Controller
 
         return $result;
     }
+
+    public function add_students(Request $req) {
+        $grade_level = GradeLevel::find($req->input('grade_id'));
+
+        return $grade_level->students()->attach($req->input('student_id'));
+    }
 }
