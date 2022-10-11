@@ -40,4 +40,9 @@ class TeacherController extends Controller
         $teacher = Teacher::find($req->input('teacher_id'));
         return $teacher->subjects()->attach($req->input('subject_id'));
     }
+    
+    public function remove_subject(Request $req) {
+        $teacher = Teacher::find($req->input('teacher_id'));
+        return $teacher->subjects()->detach($req->input('subject_id'));
+    }
 }
