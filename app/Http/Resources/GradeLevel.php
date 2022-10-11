@@ -19,7 +19,8 @@ class GradeLevel extends JsonResource
             'id' => $this->id,
             'level' => $this->level,
             'name' => $this->name,
-            'subject_teachers' =>SubjectTeacher::collection($this->subject_teachers),
+            'subject_teachers' => SubjectTeacher::collection($this->subject_teachers),
+            'students' => $this->students,
         ];
     }
 }

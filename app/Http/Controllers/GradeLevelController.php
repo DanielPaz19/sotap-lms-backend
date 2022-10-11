@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\GradeLevel as ResourcesGradeLevel;
 use Illuminate\Http\Request;
 use App\Models\GradeLevel;
 use App\Http\Resources\GradeLevelCollection;
@@ -10,8 +11,11 @@ use App\Http\Resources\GradeLevelCollection;
 class GradeLevelController extends Controller
 {
     public function grade_levels() {
-        // return Student::all();
         return new GradeLevelCollection(GradeLevel::all());
+    }
+
+    public function grade_level($id) {
+        return new ResourcesGradeLevel(GradeLevel::find($id));
     }
 
     public function store(Request $request){

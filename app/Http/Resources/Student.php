@@ -3,7 +3,6 @@
 namespace App\Http\Resources;
 
 
-use App\Http\Resources\GradeLevel as GradeLevelResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class Student extends JsonResource
