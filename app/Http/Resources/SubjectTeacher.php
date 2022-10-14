@@ -17,8 +17,8 @@ class SubjectTeacher extends JsonResource
         // return parent::toArray($request);
         return [
             'id' => $this->id,
-            'subject_id' => $this->subject,
-            'teacher_id' => $this->teacher,
+            'subject' => $this->subject,
+            'teacher' => $this->teacher,
         ];
     }
 }
