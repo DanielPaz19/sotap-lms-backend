@@ -54,6 +54,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('/grade_levels/add_students', [GradeLevelController::class, 'add_students']);
     Route::post('/grade_levels/remove_students', [GradeLevelController::class, 'remove_students']);
     Route::post('/grade_levels/add_subject', [GradeLevelController::class, 'add_subject']);
+    Route::post('/grade_levels/remove_subject', [GradeLevelController::class, 'remove_subject']);
 
     // subject_teacher
     Route::get('/subject_teacher', [SubjectTeacherController::class, 'subject_teacher']);
