@@ -28,7 +28,7 @@ class AuthController extends Controller
         // Check User ID
         if (!$student = Student::find($request->input('student_id'))) {
             return response()->json([
-                'message' => 'User credentials did not match.'
+                'message' => 'User information did not match.'
             ], 422); 
         };
 
