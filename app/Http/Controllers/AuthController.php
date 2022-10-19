@@ -24,26 +24,27 @@ class AuthController extends Controller
 
     public function register_student(Request $request) {
 
+
         // Check User ID
         if (!$student = Student::find($request->input('student_id'))) {
-            return [
-                'message' => 'User not found'
-            ]; 
+            return response()->json([
+                'message' => 'User credentials did not match.'
+            ], 422); 
         };
 
         // Check if user is Registered 
         if ($student->user_id) {
-            return [
+            return response()->json([
                 "message" => "User ID already registered!"
-            ];
+            ], 422);
         }
         
         // Check Firstname and Lastname
         if (!($request->input('firstname') == $student->firstname && $request->input('lastname') == $student->lastname)) {
 
-            return [
-                'message' => 'User not found'
-            ]; 
+            return response()->json([
+                'message' => 'User information did not match.'
+            ], 422); 
         }
 
         return $student;
@@ -53,7 +54,7 @@ class AuthController extends Controller
     public function login(Request $request) {
         if(!Auth::attempt($request->only('username', 'password'))) {
             return response([
-                'message'=> 'Invalid credentials',
+                'message'=> 'Invalid information',
             ],  Response::HTTP_UNAUTHORIZED);
         }
 
