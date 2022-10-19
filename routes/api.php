@@ -22,6 +22,7 @@ use App\Http\Controllers\SubjectTeacherController;
 
 
 Route::post('/register', [AuthController::class, 'register']);
+Route::post('/register/student', [AuthController::class, 'register_student']);
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function(){
