@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Teacher;
-use Illuminate\Support\Str;
+use App\Models\SubjectTeacher;
 use Illuminate\Http\Request;
 use App\Http\Resources\TeacherCollection;
 
@@ -36,5 +36,13 @@ class TeacherController extends Controller
         return $teacher;
     }
 
-
+    public function add_subject(Request $req) {
+        $teacher = Teacher::find($req->input('teacher_id'));
+        return $teacher->subjects()->attach($req->input('subject_id'));
+    }
+    
+    public function remove_subject(Request $req) {
+        $teacher = Teacher::find($req->input('teacher_id'));
+        return $teacher->subjects()->detach($req->input('subject_id'));
+    }
 }

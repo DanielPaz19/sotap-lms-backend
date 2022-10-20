@@ -7,6 +7,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\GradeLevelController;
+use App\Http\Controllers\SubjectTeacherController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +22,7 @@ use App\Http\Controllers\GradeLevelController;
 
 
 Route::post('/register', [AuthController::class, 'register']);
+Route::post('/register/student', [AuthController::class, 'register_student']);
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function(){
@@ -37,6 +39,8 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/teachers',[TeacherController::class, 'teachers']);
     Route::post('/teachers',[TeacherController::class, 'store']);
     Route::delete('/teachers/{id}',[TeacherController::class, 'delete']);
+    Route::post('/teachers/add_subject',[TeacherController::class, 'add_subject']);
+    Route::post('/teachers/remove_subject',[TeacherController::class, 'remove_subject']);
 
     // subjects
     Route::get('/subjects',[SubjectController::class, 'subjects']);
@@ -45,6 +49,15 @@ Route::middleware('auth:sanctum')->group(function(){
 
     // grade levels
     Route::get('/grade_levels', [GradeLevelController::class, 'grade_levels']);
+    Route::get('/grade_levels/{id}', [GradeLevelController::class, 'grade_level']);
     Route::post('/grade_levels', [GradeLevelController::class, 'store']);
     Route::delete('/grade_levels/{id}', [GradeLevelController::class, 'delete']);
+    Route::post('/grade_levels/add_students', [GradeLevelController::class, 'add_students']);
+    Route::post('/grade_levels/remove_students', [GradeLevelController::class, 'remove_students']);
+    Route::post('/grade_levels/add_subject', [GradeLevelController::class, 'add_subject']);
+    Route::post('/grade_levels/remove_subject', [GradeLevelController::class, 'remove_subject']);
+
+    // subject_teacher
+    Route::get('/subject_teacher', [SubjectTeacherController::class, 'subject_teacher']);
+
 });

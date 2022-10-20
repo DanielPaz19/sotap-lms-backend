@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateGradeStudentsTable extends Migration
+class CreateGradeSubjectsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,17 @@ class CreateGradeStudentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('grade_student', function (Blueprint $table) {
+        Schema::create('grade_subject', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('student_id');
+            $table->unsignedBigInteger('subject_id');
             $table->unsignedBigInteger('grade_id');
+            $table->unsignedBigInteger('teacher_id');
             $table->timestamps();
-            $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
-            $table->foreign('grade_id')->references('id')->on('grade_levels')->onDelete('cascade');
-        });
 
-     
+            $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
+            $table->foreign('grade_id')->references('id')->on('grade_levels')->onDelete('cascade');
+            $table->foreign('teacher_id')->references('id')->on('teachers')->onDelete('cascade');
+        });
     }
 
     /**
@@ -32,6 +33,8 @@ class CreateGradeStudentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('grade_student');
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0');   
+        Schema::dropIfExists('grade_subject');
+        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }
 }

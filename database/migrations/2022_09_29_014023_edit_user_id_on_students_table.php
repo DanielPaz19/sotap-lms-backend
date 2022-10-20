@@ -25,8 +25,16 @@ class EditUserIdOnStudentsTable extends Migration
      */
     public function down()
     {
-        Schema::table('students', function (Blueprint $table) {
-            $table->dropColumn('user_id');
-        });
+        if (Schema::hasColumn('students', 'user_id'))
+        {
+            Schema::table('students', function (Blueprint $table)
+            {
+                $table->dropForeign(['user_id']);
+                $table->dropColumn('user_id');
+            });
+        }
+        // Schema::table('students', function (Blueprint $table) {
+        //     $table->dropColumn('user_id');
+        // });
     }
 }

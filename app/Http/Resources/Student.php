@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class Student extends JsonResource
@@ -24,7 +25,7 @@ class Student extends JsonResource
             'created_at' => $this->created_at->diffForHumans(),
             'updated_at' => $this->updated_at->diffForHumans(),
             'user' => $this->user,
-            'grade' => $this->grade_level,
+            'grade_level' => $this->grade_level,
         ];
     }
 }

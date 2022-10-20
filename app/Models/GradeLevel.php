@@ -15,7 +15,12 @@ class GradeLevel extends Model
     ];
 
     
-    public function student() {
-        return $this->belongsToMany(Student::class, 'grade_student', 'grade_id', 'student_id');
+    public function students() {
+        return $this->belongsToMany(Student::class, 'grade_student', 'grade_id', 'student_id')->withTimestamps();
      }
+
+     public function subject_teachers() {
+        return $this->belongsToMany(SubjectTeacher::class, 'grade_subject', 'grade_id', 'subject_teacher_id');
+     }
+     
 }

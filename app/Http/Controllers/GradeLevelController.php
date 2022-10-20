@@ -2,14 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\GradeLevel as ResourcesGradeLevel;
 use Illuminate\Http\Request;
 use App\Models\GradeLevel;
+use App\Http\Resources\GradeLevelCollection;
+
 
 class GradeLevelController extends Controller
 {
     public function grade_levels() {
-        // return Student::all();
-        return GradeLevel::all();
+        return new GradeLevelCollection(GradeLevel::all());
+    }
+
+    public function grade_level($id) {
+        return new ResourcesGradeLevel(GradeLevel::find($id));
     }
 
     public function store(Request $request){
@@ -24,5 +30,29 @@ class GradeLevelController extends Controller
         $result =  $grade_level->delete();
 
         return $result;
+    }
+
+    public function add_students(Request $req) {
+        $grade_level = GradeLevel::find($req->input('grade_id'));
+
+        return $grade_level->students()->attach($req->input('student_id'));
+    }
+
+    public function remove_students(Request $req) {
+        $grade_level = GradeLevel::find($req->input('grade_id'));
+
+        return $grade_level->students()->detach($req->input('students'));
+    }
+
+    public function add_subject(Request $req) {
+        $grade_level = GradeLevel::find($req->input('grade_id'));
+        
+        return $grade_level->subject_teachers()->attach($req->input('subject_teacher_id'));
+    }
+    
+    public function remove_subject(Request $req) {
+        $grade_level = GradeLevel::find($req->input('grade_id'));
+        
+        return $grade_level->subject_teachers()->detach($req->input('subject_teacher_id'));
     }
 }
