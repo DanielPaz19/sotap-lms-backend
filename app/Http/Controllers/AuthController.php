@@ -47,7 +47,34 @@ class AuthController extends Controller
             ], 422); 
         }
 
-        return $student;
+        // Check Username
+        if (User::all()->where('username','=',$request->input('username'))->count() > 0){
+            return response()->json([
+                'message' => 'Username not available. Try again.'
+            ], 422);
+        };
+
+        // Register User
+        $student = Student::find($request->input('student_id'));
+
+        $data = $student->user()->create([
+            'username' => $request->input('username'),
+            'password' => Hash::make($request->input('password')),
+            'role' => 3
+        ]);
+
+        
+        $student->user()->associate($data);
+
+        if(!$student->save()) {
+            return response()->json([
+                "message" => "Something Went Wrong!"
+            ], 422);
+        } else { 
+            return response()->json([
+                "message" => "Registered Successfully"
+            ], Response::HTTP_CREATED);
+        };
     }
 
 
