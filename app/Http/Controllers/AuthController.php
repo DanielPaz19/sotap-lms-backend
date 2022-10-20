@@ -47,12 +47,19 @@ class AuthController extends Controller
             ], 422); 
         }
 
-        // Check Username
-        if (User::all()->where('username','=',$request->input('username'))->count() > 0){
-            return response()->json([
-                'message' => 'Username not available. Try again.'
-            ], 422);
-        };
+        if ($request->input('username') !=  "") {
+            // Check Username
+            if (User::all()->where('username','=',$request->input('username'))->count() > 0){
+                return response()->json([
+                    'message' => 'Username not available. Try again.'
+                ], 422);
+            };
+        } else {
+            return [
+                "message" => "Proceed to Next Step"
+            ];
+        }
+
 
         // Register User
         $student = Student::find($request->input('student_id'));
