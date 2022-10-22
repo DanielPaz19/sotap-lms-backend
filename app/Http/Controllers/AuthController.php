@@ -168,11 +168,11 @@ class AuthController extends Controller
     }
 
     public function logout(Request $request) {
-        Cookie::forget('jwt');
+        $cookie = Cookie::queue(Cookie::forget('jwt'));
 
         return response([
             'message'=> 'Logged Out'
-        ]);
+        ])->withCookie($cookie);
     }
 
     public function user() {
