@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use App\Models\User;
 use App\Models\Student;
+use App\Models\Teacher;
 use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
@@ -26,7 +27,7 @@ class AuthController extends Controller
 
 
         // Check User ID
-        if (!$student = Student::find($request->input('student_id'))) {
+        if (!$student = Student::find($request->input('user_id'))) {
             return response()->json([
                 'message' => 'User information did not match.'
             ], 422); 
@@ -47,7 +48,103 @@ class AuthController extends Controller
             ], 422); 
         }
 
-        return $student;
+        if ($request->input('username') !=  "") {
+            // Check Username
+            if (User::all()->where('username','=',$request->input('username'))->count() > 0){
+                return response()->json([
+                    'message' => 'Username not available. Try again.'
+                ], 422);
+            };
+        } else {
+            return [
+                "message" => "Proceed to Next Step"
+            ];
+        }
+
+
+        // Register User
+        $student = Student::find($request->input('user_id'));
+
+        $data = $student->user()->create([
+            'username' => $request->input('username'),
+            'password' => Hash::make($request->input('password')),
+            'role' => 3
+        ]);
+
+        
+        $student->user()->associate($data);
+
+        if(!$student->save()) {
+            return response()->json([
+                "message" => "Something Went Wrong!"
+            ], 422);
+        } else { 
+            return response()->json([
+                "message" => "Registered Successfully"
+            ], Response::HTTP_CREATED);
+        };
+    }
+
+    public function register_teacher(Request $request) {
+
+
+        // Check User ID
+        if (!$teacher = Teacher::find($request->input('user_id'))) {
+            return response()->json([
+                'message' => 'User information did not match.'
+            ], 422); 
+        };
+
+        // Check if user is Registered 
+        if ($teacher->user_id) {
+            return response()->json([
+                "message" => "User ID already registered!"
+            ], 422);
+        }
+        
+        // Check Firstname and Lastname
+        if (!($request->input('firstname') == $teacher->firstname && $request->input('lastname') == $teacher->lastname)) {
+
+            return response()->json([
+                'message' => 'User information did not match.'
+            ], 422); 
+        }
+
+        if ($request->input('username') !=  "") {
+            // Check Username
+            if (User::all()->where('username','=',$request->input('username'))->count() > 0){
+                return response()->json([
+                    'message' => 'Username not available. Try again.'
+                ], 422);
+            };
+        } else {
+            return [
+                "message" => "Proceed to Next Step"
+            ];
+        }
+
+
+        // Register User
+        $teacher = Teacher::find($request->input('user_id'));
+
+        $data = $teacher->user()->create([
+            'username' => $request->input('username'),
+            'password' => Hash::make($request->input('password')),
+            'role' => 2
+        ]);
+
+        
+        $teacher->user()->associate($data);
+
+        if(!$teacher->save()) {
+            return response()->json([
+                "message" => "Something Went Wrong!"
+            ], 422);
+        } else { 
+            return response()->json([
+                "message" => "Registered Successfully"
+            ], Response::HTTP_CREATED);
+        };
     }
 
 
