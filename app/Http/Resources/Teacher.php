@@ -22,6 +22,7 @@ class Teacher extends JsonResource
             'lastname' => $this->lastname,
             'created_at' => $this->created_at->diffForHumans(),
             'updated_at' => $this->updated_at->diffForHumans(),
+            'user_id' => $this->user_id,
             'user' => $this->user,
             'subjects'=> $this->subjects,
         ];

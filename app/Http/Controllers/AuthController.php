@@ -2,14 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\StudentCollection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
+use App\Http\Resources\TeacherCollection;
+use App\Http\Resources\UserCollection;
 use App\Models\User;
 use App\Models\Student;
 use App\Models\Teacher;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
@@ -24,8 +28,6 @@ class AuthController extends Controller
     }
 
     public function register_student(Request $request) {
-
-
         // Check User ID
         if (!$student = Student::find($request->input('user_id'))) {
             return response()->json([
@@ -61,7 +63,6 @@ class AuthController extends Controller
             ];
         }
 
-
         // Register User
         $student = Student::find($request->input('user_id'));
 
@@ -85,9 +86,8 @@ class AuthController extends Controller
         };
     }
 
+    
     public function register_teacher(Request $request) {
-
-
         // Check User ID
         if (!$teacher = Teacher::find($request->input('user_id'))) {
             return response()->json([
@@ -161,9 +161,23 @@ class AuthController extends Controller
 
         $cookie = cookie('jwt', $token, 60 * 24,null,null,null,true,false,"none");
 
-        return response([
-            'message'=> 'Login Success'
-        ])->withCookie($cookie);
+        // admin Role
+        if ($user->role == 1) {
+            $data = new UserCollection(User::where('id', $user->id)->get());
+        }
+
+        // teacher role
+        if ($user->role == 2) {
+            $data =  new TeacherCollection(Teacher::where('user_id', $user->id)->get());
+        }
+
+        // student role
+        if ($user->role == 3) {
+            $data =  new StudentCollection(Student::where('user_id', $user->id)->get());
+        }
+
+
+        return response($data, Response::HTTP_OK)->withCookie($cookie);
 
     }
 
