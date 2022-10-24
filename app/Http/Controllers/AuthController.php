@@ -149,7 +149,7 @@ class AuthController extends Controller
 
 
     public function login(Request $request) {
-        if(!Auth::attempt($request->only('username', 'password'))) {
+        if(!Auth::attempt($request->only('username', 'password', 'role'))) {
             return response([
                 'message'=> 'Invalid information',
             ],  Response::HTTP_UNAUTHORIZED);
