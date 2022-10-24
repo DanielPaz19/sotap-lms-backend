@@ -26,6 +26,7 @@ class Student extends JsonResource
             'updated_at' => $this->updated_at->diffForHumans(),
             'user' => $this->user,
             'grade_level' => $this->grade_level,
+            'user_id' => $this->user_id,
         ];
     }
 }
