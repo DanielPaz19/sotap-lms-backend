@@ -190,6 +190,24 @@ class AuthController extends Controller
     }
 
     public function user() {
-        return Auth::user();
+        $user = Auth::user();
+
+        // admin Role
+        if ($user->role == 1) {
+            $data = new UserCollection(User::where('id', $user->id)->get());
+        }
+
+        // teacher role
+        if ($user->role == 2) {
+            $data =  new TeacherCollection(Teacher::where('user_id', $user->id)->get());
+        }
+
+        // student role
+        if ($user->role == 3) {
+            $data =  new StudentCollection(Student::where('user_id', $user->id)->get());
+        }
+
+
+        return response($data, Response::HTTP_OK);
     }
 }
