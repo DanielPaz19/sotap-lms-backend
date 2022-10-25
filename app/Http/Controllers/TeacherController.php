@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Teacher;
-use App\Models\SubjectTeacher;
 use Illuminate\Http\Request;
 use App\Http\Resources\TeacherCollection;
-
+use Illuminate\Support\Facades\DB;
+use Symfony\Component\HttpFoundation\Response ;
 
 class TeacherController extends Controller
 {
@@ -48,5 +48,20 @@ class TeacherController extends Controller
     public function remove_subject(Request $req) {
         $teacher = Teacher::find($req->input('teacher_id'));
         return $teacher->subjects()->detach($req->input('subject_id'));
+    }
+
+    public function grade_levels($id) {
+        // get grade levels associate with specific teacher
+        $grades = DB::table('teachers')
+                ->join('subject_teacher', 'teachers.id', '=', 'subject_teacher.teacher_id')
+                ->join('grade_subject', 'subject_teacher.id', '=', 'grade_subject.subject_teacher_id')
+                ->join('grade_levels', 'grade_levels.id', '=', 'grade_subject.grade_id')
+                ->select('grade_levels.*')
+                ->groupBy('id')
+                ->where('teachers.id', '=', $id)
+                ->where('teachers.id', '<>', null)
+                ->get();
+
+        return response()->json(["data" => $grades], Response::HTTP_OK);
     }
 }

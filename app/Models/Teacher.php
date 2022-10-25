@@ -25,4 +25,9 @@ class Teacher extends Model
         return $this->belongsToMany(Subject::class, 'subject_teacher');
      }
 
+
+     public function grade_subjects() {
+        return $this->hasManyThrough(GradeSubject::class, SubjectTeacher::class);
+     }
+
 }

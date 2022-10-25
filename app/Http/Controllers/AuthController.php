@@ -13,7 +13,6 @@ use App\Models\User;
 use App\Models\Student;
 use App\Models\Teacher;
 use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
