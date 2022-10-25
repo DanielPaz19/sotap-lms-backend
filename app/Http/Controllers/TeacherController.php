@@ -57,7 +57,7 @@ class TeacherController extends Controller
                 ->join('grade_subject', 'subject_teacher.id', '=', 'grade_subject.subject_teacher_id')
                 ->join('grade_levels', 'grade_levels.id', '=', 'grade_subject.grade_id')
                 ->select('grade_levels.*')
-                ->groupBy('id')
+                ->groupBy('grade_levels.id')
                 ->where('teachers.id', '=', $id)
                 ->where('teachers.id', '<>', null)
                 ->get();
