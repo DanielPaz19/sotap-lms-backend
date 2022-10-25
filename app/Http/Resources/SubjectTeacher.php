@@ -19,6 +19,7 @@ class SubjectTeacher extends JsonResource
             'id' => $this->id,
             'subject' => $this->subject,
             'teacher' => $this->teacher,
+            'grade' => $this->grade_levels,
         ];
     }
 }
