@@ -38,6 +38,7 @@ Route::middleware('auth:sanctum')->group(function(){
 
     // teacher
     Route::get('/teachers',[TeacherController::class, 'teachers']);
+    Route::get('/teacher/{id}',[TeacherController::class, 'teacher']);
     Route::post('/teachers',[TeacherController::class, 'store']);
     Route::delete('/teachers/{id}',[TeacherController::class, 'delete']);
     Route::post('/teachers/add_subject',[TeacherController::class, 'add_subject']);

@@ -16,6 +16,10 @@ class TeacherController extends Controller
         
     }
 
+    public function teacher($id) {
+        return new TeacherCollection(Teacher::where('id', $id)->get());
+    }
+
     public function store(Request $request){
         return Teacher::create([
             'firstname' => $request->input('firstname'),
