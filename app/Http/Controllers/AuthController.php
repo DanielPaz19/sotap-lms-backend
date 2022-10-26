@@ -57,9 +57,9 @@ class AuthController extends Controller
                 ], 422);
             };
         } else {
-            return [
-                "message" => "Proceed to Next Step"
-            ];
+            return response()->json([
+                'message' => 'Enter Username and Password'
+            ], Response::HTTP_ACCEPTED);
         }
 
         // Register User
@@ -117,9 +117,9 @@ class AuthController extends Controller
                 ], 422);
             };
         } else {
-            return [
-                "message" => "Proceed to Next Step"
-            ];
+            return response()->json([
+                'message' => 'Enter Username and Password'
+            ], Response::HTTP_ACCEPTED);
         }
 
 
