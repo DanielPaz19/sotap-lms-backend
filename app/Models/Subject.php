@@ -21,4 +21,6 @@ class Subject extends Model
        return $this->belongsToMany(Teacher::class, 'subject_teacher');
    }
 
+   
+
 }

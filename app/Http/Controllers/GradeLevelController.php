@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\GradeLevel as ResourcesGradeLevel;
 use App\Http\Resources\Student as ResourcesStudent;
+use App\Http\Resources\Subject as ResourcesSubject;
 use Illuminate\Http\Request;
 use App\Models\GradeLevel;
+use App\Models\Subject;
 use App\Http\Resources\GradeLevelCollection;
-
+use App\Models\SubjectTeacher;
 
 class GradeLevelController extends Controller
 {
@@ -61,5 +63,31 @@ class GradeLevelController extends Controller
         $grade_level = GradeLevel::find($gradeId);
         
         return ResourcesStudent::collection($grade_level->students()->orderBy('id')->get());
+    }
+
+    
+    public function subjects($gradeId) {
+        $grade_level = GradeLevel::find($gradeId);
+
+        // if no subject_teacher in the grade level
+        if(!count($grade_level->subject_teachers)) {
+            return response()->json(['data' => []]);
+        }
+
+        // get all the subject_teacher_id
+        foreach ($grade_level->subject_teachers as $subject_teacher) {
+           $output[] = $subject_teacher->pivot->subject_teacher_id;
+        }
+
+        // get subject_teacher where grade_id = $id
+        $subject_teachers = SubjectTeacher::whereIn('id', $output)->get();
+
+        foreach ($subject_teachers as $subject_teacher) {
+            $subject_id[] = $subject_teacher->subject_id;
+         }
+
+         $subjects = Subject::whereIn('id', $subject_id)->get();
+
+        return ResourcesSubject::collection($subjects);
     }
 }
