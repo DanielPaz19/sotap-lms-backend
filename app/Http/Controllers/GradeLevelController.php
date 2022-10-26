@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\GradeLevel as ResourcesGradeLevel;
+use App\Http\Resources\Student as ResourcesStudent;
 use Illuminate\Http\Request;
 use App\Models\GradeLevel;
 use App\Http\Resources\GradeLevelCollection;
@@ -54,5 +55,11 @@ class GradeLevelController extends Controller
         $grade_level = GradeLevel::find($req->input('grade_id'));
         
         return $grade_level->subject_teachers()->detach($req->input('subject_teacher_id'));
+    }
+
+    public function students($gradeId) {
+        $grade_level = GradeLevel::find($gradeId);
+        
+        return ResourcesStudent::collection($grade_level->students()->orderBy('id')->get());
     }
 }

@@ -40,6 +40,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/teachers',[TeacherController::class, 'teachers']);
     Route::get('/teacher/{id}',[TeacherController::class, 'teacher']);
     Route::get('/teacher/{id}/grade_levels',[TeacherController::class, 'grade_levels']);
+    Route::get('/teacher/{id}/students',[TeacherController::class, 'students']);
     Route::post('/teachers',[TeacherController::class, 'store']);
     Route::delete('/teachers/{id}',[TeacherController::class, 'delete']);
     Route::post('/teachers/add_subject',[TeacherController::class, 'add_subject']);
@@ -53,6 +54,7 @@ Route::middleware('auth:sanctum')->group(function(){
     // grade levels
     Route::get('/grade_levels', [GradeLevelController::class, 'grade_levels']);
     Route::get('/grade_levels/{id}', [GradeLevelController::class, 'grade_level']);
+    Route::get('/grade_levels/{id}/students', [GradeLevelController::class, 'students']);
     Route::post('/grade_levels', [GradeLevelController::class, 'store']);
     Route::delete('/grade_levels/{id}', [GradeLevelController::class, 'delete']);
     Route::post('/grade_levels/add_students', [GradeLevelController::class, 'add_students']);

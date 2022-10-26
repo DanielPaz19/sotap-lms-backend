@@ -64,4 +64,5 @@ class TeacherController extends Controller
 
         return response()->json(["data" => $grades], Response::HTTP_OK);
     }
+
 }
