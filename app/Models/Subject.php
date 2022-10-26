@@ -15,12 +15,14 @@ class Subject extends Model
         'subject_description',
     ];
 
-   
-   public function teachers()
-   {
-       return $this->belongsToMany(Teacher::class, 'subject_teacher');
-   }
 
-   
+    public function teachers()
+    {
+        return $this->belongsToMany(Teacher::class, 'subject_teacher');
+    }
 
+    public function topics()
+    {
+        return $this->hasMany(Topic::class);
+    }
 }
