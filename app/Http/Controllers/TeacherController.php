@@ -6,21 +6,23 @@ use App\Models\Teacher;
 use Illuminate\Http\Request;
 use App\Http\Resources\TeacherCollection;
 use Illuminate\Support\Facades\DB;
-use Symfony\Component\HttpFoundation\Response ;
+use Symfony\Component\HttpFoundation\Response;
 
 class TeacherController extends Controller
 {
-    public function teachers() {
+    public function teachers()
+    {
         // return Teacher::all();
         return new TeacherCollection(Teacher::all());
-        
     }
 
-    public function teacher($id) {
+    public function teacher($id)
+    {
         return new TeacherCollection(Teacher::where('id', $id)->get());
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         return Teacher::create([
             'firstname' => $request->input('firstname'),
             'middlename' => $request->input('middlename'),
@@ -28,41 +30,50 @@ class TeacherController extends Controller
         ]);
     }
 
-    public function delete($id) {
+    public function delete($id)
+    {
         $teacher = Teacher::find($id);
 
-        if($teacher == "") {
+        if ($teacher == "") {
             return ["message" => "ID not found"];
-        }else {
+        } else {
             $teacher->delete();
         }
 
         return $teacher;
     }
 
-    public function add_subject(Request $req) {
+    public function add_subject(Request $req)
+    {
         $teacher = Teacher::find($req->input('teacher_id'));
         return $teacher->subjects()->attach($req->input('subject_id'));
     }
-    
-    public function remove_subject(Request $req) {
+
+    public function remove_subject(Request $req)
+    {
         $teacher = Teacher::find($req->input('teacher_id'));
         return $teacher->subjects()->detach($req->input('subject_id'));
     }
 
-    public function grade_levels($id) {
+    public function grade_levels($id)
+    {
         // get grade levels associate with specific teacher
         $grades = DB::table('teachers')
-                ->join('subject_teacher', 'teachers.id', '=', 'subject_teacher.teacher_id')
-                ->join('grade_subject', 'subject_teacher.id', '=', 'grade_subject.subject_teacher_id')
-                ->join('grade_levels', 'grade_levels.id', '=', 'grade_subject.grade_id')
-                ->select('grade_levels.*')
-                ->groupBy('grade_levels.id')
-                ->where('teachers.id', '=', $id)
-                ->where('teachers.id', '<>', null)
-                ->get();
+            ->join('subject_teacher', 'teachers.id', '=', 'subject_teacher.teacher_id')
+            ->join('grade_subject', 'subject_teacher.id', '=', 'grade_subject.subject_teacher_id')
+            ->join('grade_levels', 'grade_levels.id', '=', 'grade_subject.grade_id')
+            ->select('grade_levels.*')
+            ->groupBy('grade_levels.id')
+            ->where('teachers.id', '=', $id)
+            ->where('teachers.id', '<>', null)
+            ->get();
 
         return response()->json(["data" => $grades], Response::HTTP_OK);
     }
 
+
+    public function subjects(Teacher $teacher)
+    {
+        return response()->json(["data" => $teacher->subjects]);
+    }
 }
