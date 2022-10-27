@@ -8,6 +8,7 @@ use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\GradeLevelController;
 use App\Http\Controllers\SubjectTeacherController;
+use App\Http\Controllers\TopicController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,30 +27,30 @@ Route::post('/register/student', [AuthController::class, 'register_student']);
 Route::post('/register/teacher', [AuthController::class, 'register_teacher']);
 Route::post('/login', [AuthController::class, 'login']);
 
-Route::middleware('auth:sanctum')->group(function(){
+Route::middleware('auth:sanctum')->group(function () {
     // Check Users
     Route::get('/user', [AuthController::class, 'user']);
     Route::post('/logout', [AuthController::class, 'logout']);
 
     // student
-    Route::get('/students',[StudentController::class, 'students']);
-    Route::post('/students',[StudentController::class, 'store']);
-    Route::delete('/students/{id}',[StudentController::class, 'delete']);
+    Route::get('/students', [StudentController::class, 'students']);
+    Route::post('/students', [StudentController::class, 'store']);
+    Route::delete('/students/{id}', [StudentController::class, 'delete']);
 
     // teacher
-    Route::get('/teachers',[TeacherController::class, 'teachers']);
-    Route::get('/teacher/{id}',[TeacherController::class, 'teacher']);
-    Route::get('/teacher/{id}/grade_levels',[TeacherController::class, 'grade_levels']);
-    Route::get('/teacher/{id}/students',[TeacherController::class, 'students']);
-    Route::post('/teachers',[TeacherController::class, 'store']);
-    Route::delete('/teachers/{id}',[TeacherController::class, 'delete']);
-    Route::post('/teachers/add_subject',[TeacherController::class, 'add_subject']);
-    Route::post('/teachers/remove_subject',[TeacherController::class, 'remove_subject']);
+    Route::get('/teachers', [TeacherController::class, 'teachers']);
+    Route::get('/teacher/{id}', [TeacherController::class, 'teacher']);
+    Route::get('/teacher/{id}/grade_levels', [TeacherController::class, 'grade_levels']);
+    Route::get('/teacher/{id}/students', [TeacherController::class, 'students']);
+    Route::post('/teachers', [TeacherController::class, 'store']);
+    Route::delete('/teachers/{id}', [TeacherController::class, 'delete']);
+    Route::post('/teachers/add_subject', [TeacherController::class, 'add_subject']);
+    Route::post('/teachers/remove_subject', [TeacherController::class, 'remove_subject']);
 
     // subjects
-    Route::get('/subjects',[SubjectController::class, 'subjects']);
-    Route::post('/subjects',[SubjectController::class, 'store']);
-    Route::delete('/subjects/{id}',[SubjectController::class, 'delete']);
+    Route::get('/subjects', [SubjectController::class, 'subjects']);
+    Route::post('/subjects', [SubjectController::class, 'store']);
+    Route::delete('/subjects/{id}', [SubjectController::class, 'delete']);
 
     // grade levels
     Route::get('/grade_levels', [GradeLevelController::class, 'grade_levels']);
@@ -66,4 +67,6 @@ Route::middleware('auth:sanctum')->group(function(){
     // subject_teacher
     Route::get('/subject_teacher', [SubjectTeacherController::class, 'subject_teacher']);
 
+    // topics
+    Route::resource('topics', TopicController::class);
 });
