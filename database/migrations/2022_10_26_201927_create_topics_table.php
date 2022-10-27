@@ -17,6 +17,7 @@ class CreateTopicsTable extends Migration
             $table->id();
             $table->string('title');
             $table->string('body');
+            $table->string('url');
             $table->unsignedBigInteger('subject_id');
             $table->unsignedBigInteger('teacher_id');
             $table->timestamps();

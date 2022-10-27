@@ -15,7 +15,7 @@ class TopicController extends Controller
      */
     public function index()
     {
-        return Topic::all();
+        return response()->json(["data" => Topic::all()]);
     }
 
     /**
@@ -41,6 +41,7 @@ class TopicController extends Controller
 
             $topic->title = $request->title;
             $topic->body = $request->body;
+            $topic->url = $request->url;
             $topic->subject_id = $request->subject_id;
             $topic->teacher_id = $request->teacher_id;
 
@@ -63,7 +64,7 @@ class TopicController extends Controller
      */
     public function show(Topic $topic)
     {
-        //
+        return response()->json(["data" => $topic]);
     }
 
     /**
@@ -89,6 +90,7 @@ class TopicController extends Controller
 
         $topic->title = $request->title;
         $topic->body = $request->body;
+        $topic->url = $request->url;
         $topic->subject_id = $request->subject_id;
         $topic->teacher_id = $request->teacher_id;
 
