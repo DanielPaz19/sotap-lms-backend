@@ -76,4 +76,9 @@ class TeacherController extends Controller
     {
         return response()->json(["data" => $teacher->subjects]);
     }
+
+    public function topics(Teacher $teacher)
+    {
+        return response()->json(["data" => $teacher->topics]);
+    }
 }
