@@ -77,8 +77,21 @@ class TeacherController extends Controller
         return response()->json(["data" => $teacher->subjects]);
     }
 
-    public function topics(Teacher $teacher)
+    public function topics(Teacher $teacher, Request $request)
     {
+        if ($request->query()) {
+            if ($request->has('subject')) {
+                return response()
+                    ->json([
+                        "data" => $teacher
+                            ->topics
+                            ->where("subject_id", $request->subject)
+                    ]);
+            }
+
+            return response()->json(["message" => "Invalid Query Params"], Response::HTTP_BAD_REQUEST);
+        }
+
         return response()->json(["data" => $teacher->topics]);
     }
 }
