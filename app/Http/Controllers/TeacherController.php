@@ -83,7 +83,8 @@ class TeacherController extends Controller
             if ($request->has('subject')) {
                 return response()
                     ->json([
-                        "data" => $teacher
+                        "data" =>
+                        $teacher
                             ->topics
                             ->where("subject_id", $request->subject)
                     ]);
