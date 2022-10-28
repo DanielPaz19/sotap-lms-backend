@@ -26,4 +26,10 @@ class Topic extends Model
     {
         return $this->belongsTo(Teacher::class);
     }
+
+    public function grade_levels()
+    {
+        return $this->belongsToMany(GradeLevel::class, 'grade_topic', 'grade_id', 'topic_id')
+            ->withTimestamps();
+    }
 }
