@@ -20,7 +20,7 @@ class GradeLevelController extends Controller
 
     public function grade_level(GradeLevel $id)
     {
-        return response()->json(["data" => [$id]]);
+        return response()->json(["data" => $id]);
     }
 
     public function topics(GradeLevel $grade_level)
