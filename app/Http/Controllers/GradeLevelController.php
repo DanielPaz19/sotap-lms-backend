@@ -91,7 +91,7 @@ class GradeLevelController extends Controller
     }
 
 
-    public function subjects($gradeId)
+    public function subjects($gradeId, Request $request)
     {
         $grade_level = GradeLevel::find($gradeId);
 
@@ -106,7 +106,16 @@ class GradeLevelController extends Controller
         }
 
         // get subject_teacher where grade_id = $id
-        $subject_teachers = SubjectTeacher::whereIn('id', $output)->get();
+
+        if ($request->query()) {
+            if (!$request->has('teacher')) {
+                return response()->json(["data" => [], "message" => "Invalid Query Params"]);
+            }
+            $subject_teachers = SubjectTeacher::whereIn('id', $output)->where('teacher_id', $request->query('teacher'))->get();
+        } else {
+            $subject_teachers = SubjectTeacher::whereIn('id', $output)->get();
+        }
+
 
         foreach ($subject_teachers as $subject_teacher) {
             $subject_id[] = $subject_teacher->subject_id;
