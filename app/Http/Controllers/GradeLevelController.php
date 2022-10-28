@@ -23,9 +23,17 @@ class GradeLevelController extends Controller
         return response()->json(["data" => $id]);
     }
 
-    public function topics(GradeLevel $grade_level)
+    public function topics(GradeLevel $grade_level, Request $request)
     {
-        return $grade_level->topics;
+        if ($request->query()) {
+            if (!$request->has('teacher')) {
+                return response()->json(["data" => [], "message" => "Invalide Query Params"]);
+            }
+
+            return response()->json(["data" => $grade_level->topics()->where("teacher_id", $request->query('teacher'))->get()]);
+        }
+
+        return response()->json(["data" => $grade_level->topics]);
     }
 
 
