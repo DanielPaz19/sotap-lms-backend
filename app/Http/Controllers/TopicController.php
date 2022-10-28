@@ -48,7 +48,7 @@ class TopicController extends Controller
 
             $topic->save();
 
-            return response()->json(["data" => $topic], Response::HTTP_OK);
+            return response()->json(["data" => [$topic]], Response::HTTP_OK);
         } catch (\Throwable $th) {
             return response()->json([
                 "message" => "Data not saved",
