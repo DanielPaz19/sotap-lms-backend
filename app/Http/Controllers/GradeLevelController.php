@@ -18,9 +18,9 @@ class GradeLevelController extends Controller
         return new GradeLevelCollection(GradeLevel::all());
     }
 
-    public function grade_level($id)
+    public function grade_level(GradeLevel $id)
     {
-        return new ResourcesGradeLevel(GradeLevel::find($id));
+        return response()->json(["data" => [$id]]);
     }
 
     public function topics(GradeLevel $grade_level)
