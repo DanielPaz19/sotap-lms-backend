@@ -22,57 +22,90 @@ use App\Http\Controllers\TopicController;
 */
 
 
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/register/student', [AuthController::class, 'register_student']);
-Route::post('/register/teacher', [AuthController::class, 'register_teacher']);
-Route::post('/login', [AuthController::class, 'login']);
+Route::controller(AuthController::class)->group(function () {
+    Route::post('/login',  'login');
+
+    Route::prefix('register')->group(function () {
+        Route::post('/', 'register');
+        Route::post('/student', 'register_student');
+        Route::post('/teacher', 'register_teacher');
+    });
+});
+
 
 Route::middleware('auth:sanctum')->group(function () {
+
     // Check Users
-    Route::get('/user', [AuthController::class, 'user']);
-    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::controller(AuthController::class)->group(function () {
+        Route::get('/user', 'user');
+        Route::post('/logout', 'logout');
+    });
+
 
     // student
-    Route::get('/students', [StudentController::class, 'students']);
-    Route::post('/students', [StudentController::class, 'store']);
-    Route::delete('/students/{id}', [StudentController::class, 'delete']);
+    Route::controller(StudentController::class)
+        ->prefix('students')
+        ->group(function () {
+            Route::get('/', 'students');
+            Route::post('/', 'store');
+            Route::delete('/{id}', 'delete');
+        });
 
     // teacher
-    Route::get('/teachers', [TeacherController::class, 'teachers']);
-    Route::get('/teacher/{id}', [TeacherController::class, 'teacher']);
-    Route::get('/teacher/{teacher}/subjects', [TeacherController::class, 'subjects']);
-    Route::get('/teacher/{teacher}/topics', [TeacherController::class, 'topics']);
-    Route::get('/teacher/{id}/grade_levels', [TeacherController::class, 'grade_levels']);
-    Route::get('/teacher/{id}/students', [TeacherController::class, 'students']);
-    Route::post('/teachers', [TeacherController::class, 'store']);
-    Route::delete('/teachers/{id}', [TeacherController::class, 'delete']);
-    Route::post('/teachers/add_subject', [TeacherController::class, 'add_subject']);
-    Route::post('/teachers/remove_subject', [TeacherController::class, 'remove_subject']);
+    Route::controller(TeacherController::class)->group(function () {
+        Route::prefix('teachers')->group(function () {
+            Route::get('/', 'teachers');
+            Route::post('/', 'store');
+            Route::delete('/{id}', 'delete');
+            Route::post('/add_subject', 'add_subject');
+            Route::post('/remove_subject', 'remove_subject');
+        });
+
+        Route::prefix('teacher')->group(function () {
+            Route::get('/{id}', 'teacher');
+            Route::get('/{teacher}/subjects', 'subjects');
+            Route::get('/{teacher}/topics', 'topics');
+            Route::get('/{id}/grade_levels', 'grade_levels');
+            Route::get('/{id}/students', 'students');
+        });
+    });
 
     // subjects
-    Route::get('/subjects', [SubjectController::class, 'subjects']);
-    Route::get('/subjects/{subject}', [SubjectController::class, 'show']);
-    Route::get('/subjects/{subject}/topics', [SubjectController::class, 'topics']);
-    Route::post('/subjects', [SubjectController::class, 'store']);
-    Route::delete('/subjects/{id}', [SubjectController::class, 'delete']);
+    Route::controller(SubjectController::class)
+        ->prefix('subjects')
+        ->group(function () {
+            Route::get('/', 'subjects');
+            Route::get('/{subject}', 'show');
+            Route::get('/{subject}/topics', 'topics');
+            Route::post('/', 'store');
+            Route::delete('/{id}', 'delete');
+        });
+
 
     // grade levels
-    Route::get('/grade_levels', [GradeLevelController::class, 'grade_levels']);
-    Route::get('/grade_levels/{id}', [GradeLevelController::class, 'grade_level']);
-    Route::get('/grade_levels/{id}/students', [GradeLevelController::class, 'students']);
-    Route::get('/grade_levels/{id}/subjects', [GradeLevelController::class, 'subjects']);
-    Route::get('/grade_levels/{grade_level}/topics', [GradeLevelController::class, 'topics']);
-    Route::post('/grade_levels/{grade_level}/topics', [GradeLevelController::class, 'add_topic']);
-    Route::delete('/grade_levels/{grade_level}/topics', [GradeLevelController::class, 'remove_topic']);
-    Route::post('/grade_levels', [GradeLevelController::class, 'store']);
-    Route::delete('/grade_levels/{id}', [GradeLevelController::class, 'delete']);
-    Route::post('/grade_levels/add_students', [GradeLevelController::class, 'add_students']);
-    Route::post('/grade_levels/remove_students', [GradeLevelController::class, 'remove_students']);
-    Route::post('/grade_levels/add_subject', [GradeLevelController::class, 'add_subject']);
-    Route::post('/grade_levels/remove_subject', [GradeLevelController::class, 'remove_subject']);
+    Route::controller(GradeLevelController::class)
+        ->prefix('grade_levels')
+        ->group(function () {
+            Route::get('/', 'grade_levels');
+            Route::get('/{id}', 'grade_level');
+            Route::get('/{id}/students', 'students');
+            Route::get('/{id}/subjects', 'subjects');
+            Route::get('/{grade_level}/topics', 'topics');
+            Route::post('/{grade_level}/topics', 'add_topic');
+            Route::delete('/{grade_level}/topics', 'remove_topic');
+            Route::post('/', 'store');
+            Route::delete('/{id}', 'delete');
+            Route::post('/add_students', 'add_students');
+            Route::post('/remove_students', 'remove_students');
+            Route::post('/add_subject', 'add_subject');
+            Route::post('/remove_subject', 'remove_subject');
+        });
+
 
     // subject_teacher
-    Route::get('/subject_teacher', [SubjectTeacherController::class, 'subject_teacher']);
+    Route::controller(SubjectController::class)->prefix('subject_teacher')->group(function () {
+        Route::get('/',  'subject_teacher');
+    });
 
     // topics
     Route::resource('topics', TopicController::class);
