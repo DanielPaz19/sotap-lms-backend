@@ -27,6 +27,7 @@ class SubjectController extends Controller
             'subject_code' => $request->input('subject_code'),
             'subject_name' => $request->input('subject_name'),
             'subject_description' => $request->input('subject_description'),
+            'img_url' => $request->input('img_url'),
         ]);
     }
 

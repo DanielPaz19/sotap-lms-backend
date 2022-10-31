@@ -13,6 +13,7 @@ class Subject extends Model
         'subject_code',
         'subject_name',
         'subject_description',
+        'img_url',
     ];
 
 
