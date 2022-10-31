@@ -14,7 +14,7 @@ class AddImgUrlToSubjectTable extends Migration
     public function up()
     {
         Schema::table('subjects', function (Blueprint $table) {
-            $table->string('img_url')->nullable();
+            $table->string('img_url')->nullable()->default('https://picsum.photos/200/300');
         });
     }
 
