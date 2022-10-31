@@ -103,7 +103,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
     // subject_teacher
-    Route::controller(SubjectController::class)->prefix('subject_teacher')->group(function () {
+    Route::controller(SubjectTeacherController::class)->prefix('subject_teacher')->group(function () {
         Route::get('/',  'subject_teacher');
     });
 
