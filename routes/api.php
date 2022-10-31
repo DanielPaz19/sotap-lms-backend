@@ -47,6 +47,7 @@ Route::middleware('auth:sanctum')->group(function () {
         ->prefix('students')
         ->group(function () {
             Route::get('/', 'students');
+            Route::get('/{student}', 'show');
             Route::post('/', 'store');
             Route::delete('/{id}', 'delete');
         });
