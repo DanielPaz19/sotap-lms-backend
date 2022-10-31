@@ -6,6 +6,7 @@ use App\Models\Subject;
 
 use Illuminate\Http\Request;
 use App\Http\Resources\SubjectCollection;
+use App\Http\Resources\Subject as SubjectResource;
 
 
 class SubjectController extends Controller
@@ -23,12 +24,23 @@ class SubjectController extends Controller
 
     public function store(Request $request)
     {
-        return Subject::create([
-            'subject_code' => $request->input('subject_code'),
-            'subject_name' => $request->input('subject_name'),
-            'subject_description' => $request->input('subject_description'),
-            'img_url' => $request->input('img_url'),
-        ]);
+
+
+        $subject = new Subject;
+
+        $subject->subject_code = $request->input('subject_code');
+        $subject->subject_name = $request->input('subject_name');
+        $subject->subject_description = $request->input('subject_description');
+
+        if ($request->input('img_url')) {
+            $subject->img_url = $request->input('img_url');
+        }
+
+        $subject->save();
+
+        $subject->refresh();
+
+        return new SubjectResource($subject);
     }
 
     public function delete($id)
