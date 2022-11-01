@@ -16,8 +16,10 @@ class DatabaseSeeder extends Seeder
         \App\Models\Student::factory(20)->create();
         \App\Models\Teacher::factory(5)->create();
         \App\Models\Subject::factory(10)->create();
+        // \App\Models\SubjectTeacher::factory(10)->create();
         $this->call([
             AdminSeeder::class,
+            SubjectTeachersSeeder::class
         ]);
     }
 }
