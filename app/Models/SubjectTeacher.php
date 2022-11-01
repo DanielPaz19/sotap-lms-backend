@@ -14,16 +14,22 @@ class SubjectTeacher extends Model
         'teacher_id',
     ];
 
+
+    public $timestamps = false;
+
     protected $table = 'subject_teacher';
 
-    public function teacher() {
+    public function teacher()
+    {
         return $this->belongsTo(Teacher::class);
     }
-    public function subject() {
+    public function subject()
+    {
         return $this->belongsTo(Subject::class);
     }
 
-    public function grade_levels() {
-        return $this->belongsToMany(GradeLevel::class, 'grade_subject','subject_teacher_id', 'grade_id');
+    public function grade_levels()
+    {
+        return $this->belongsToMany(GradeLevel::class, 'grade_subject', 'subject_teacher_id', 'grade_id');
     }
 }
